@@ -4,6 +4,10 @@ import com.cydeo.utilities.Driver;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeStep;
+import io.cucumber.java.Scenario;
+import io.cucumber.messages.types.Attachment;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
 public class Hooks {
 
@@ -27,9 +31,16 @@ public class Hooks {
 
 
     @After
-    public void teardownScenario() {
+    public void teardownScenario(Scenario scenario) {
         // We will implement taking screenshot in this method
-        System.out.println("It will be closing browser using cucumber @After each scenario");
+       // System.out.println("It will be closing browser using cucumber @After each scenario");
+
+        if(scenario.isFailed()){
+            byte[] screenShot = ((TakesScreenshot)Driver.getDriver()).getScreenshotAs(OutputType.BYTES);
+            scenario.attach(screenShot, "image/png", scenario.getName());
+        }
+
+
        Driver.closeDriver();
     }
 
