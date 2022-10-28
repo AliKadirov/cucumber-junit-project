@@ -45,6 +45,6 @@ public class Wikipedia {
 
     @Then("User sees {string} is in the wiki title")
     public void userSeesIsInTheWikiTitle(String searchKeyword) {
-        Assert.assertTrue("Title verification is failed!", Driver.getDriver().getTitle().contains("Steve Jobs"));
+        Assert.assertTrue("Title verification is failed!", Driver.getDriver().getTitle().contains(searchKeyword));
     }
 }

@@ -72,7 +72,7 @@ public class BrowserUtils {
         for (WebElement each : actualOptionsAsWebElement) {
             actualOptionsAsString.add(each.getText());
         }
-
+                         return actualOptionsAsString;
     }
 
 
