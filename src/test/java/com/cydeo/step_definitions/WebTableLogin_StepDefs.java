@@ -11,6 +11,8 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.Keys;
 
+import java.util.Map;
+
 public class WebTableLogin_StepDefs {
 
     WebTableLoginPage webTableLoginPage = new WebTableLoginPage();
@@ -44,8 +46,21 @@ public class WebTableLogin_StepDefs {
 
     @When("user enters username {string} password {string} and logins")
     public void userEntersUsernamePasswordAndLogins(String username, String password) {
-        webTableLoginPage.inputUserName.sendKeys(username);
-        webTableLoginPage.inputPassword.sendKeys(password);
-        webTableLoginPage.loginButton.click();
+//        webTableLoginPage.inputUserName.sendKeys(username);
+//        webTableLoginPage.inputPassword.sendKeys(password);
+//        webTableLoginPage.loginButton.click();
+
+        webTableLoginPage.login(username, password);
+
+    }
+
+    @When("user enters below credentials")
+    public void userEntersBelowCredentials(Map<String, String> credentials) {
+        
+//        webTableLoginPage.inputUserName.sendKeys(credentials.get("username"));
+//        webTableLoginPage.inputPassword.sendKeys(credentials.get("password"));
+//        webTableLoginPage.loginButton.click();
+
+        webTableLoginPage.login(credentials.get("username"),credentials.get("password"));
     }
 }
