@@ -9,6 +9,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.Keys;
 
 public class WebTableLogin_StepDefs {
 
@@ -39,5 +40,12 @@ public class WebTableLogin_StepDefs {
     public void userShouldSeeUrlContainsOrders() {
         Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("orders"));
         
+    }
+
+    @When("user enters username {string} password {string} and logins")
+    public void userEntersUsernamePasswordAndLogins(String username, String password) {
+        webTableLoginPage.inputUserName.sendKeys(username);
+        webTableLoginPage.inputPassword.sendKeys(password);
+        webTableLoginPage.loginButton.click();
     }
 }

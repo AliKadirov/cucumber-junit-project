@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class WebTableLoginPage {
-    public WebTableLoginPage(){
+    public WebTableLoginPage() {
         PageFactory.initElements(Driver.getDriver(), this);
     }
 
@@ -18,4 +18,16 @@ public class WebTableLoginPage {
 
     @FindBy(xpath = "//button[.]")
     public WebElement loginButton;
+
+    /**
+     * This method will accept username and password and login to app
+     * @param username
+     * @param password
+     */
+
+    public void login(String username, String password) {
+        inputUserName.sendKeys(username);
+        inputPassword.sendKeys(password);
+        loginButton.click();
+    }
 }
