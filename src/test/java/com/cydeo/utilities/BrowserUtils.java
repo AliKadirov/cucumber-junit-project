@@ -20,14 +20,15 @@ public class BrowserUtils {
      * This method is used to pause the code for given seconds
      * It is static method we can call with class name
      * BrowserUtils.sleep(3);
+     *
      * @param seconds
      */
-    public static void sleep(int seconds){
+    public static void sleep(int seconds) {
         // 1 second = 1000 millis
         // millis = seconds*1000
         try {
-            Thread.sleep(seconds*1000);
-        }catch(InterruptedException e){
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException e) {
             e.printStackTrace();
             System.out.println("Exception happened in sleep method!");
         }
@@ -40,25 +41,26 @@ public class BrowserUtils {
     //• Arg1: WebDriver
     //• Arg2: String expectedTitle
     // BrowserUtils.verifyTitle(driver,"Google")
-    public static void verifyTitle(WebDriver driver, String expectedTitle){
+    public static void verifyTitle(WebDriver driver, String expectedTitle) {
 
         String actualTitle = driver.getTitle();
 
-        Assert.assertEquals(expectedTitle,actualTitle);
+        Assert.assertEquals(expectedTitle, actualTitle);
 
     }
 
-    public static void waitForInvisibilityOf(WebElement element){
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(),15);
+    public static void waitForInvisibilityOf(WebElement element) {
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 15);
         wait.until(ExpectedConditions.invisibilityOf(element));
     }
 
     /**
      * This method will accept dropdown as a WebElement
      * and return all the options' text in a List of String
+     *
      * @return List<String></String>
      */
-    public static List<String> dropdownOptionsAsString(WebElement dropdown){
+    public static List<String> dropdownOptionsAsString(WebElement dropdown) {
         Select select = new Select(dropdown);
 
         // List of all ACTUAL month <options> as a WebElement
@@ -72,8 +74,27 @@ public class BrowserUtils {
         for (WebElement each : actualOptionsAsWebElement) {
             actualOptionsAsString.add(each.getText());
         }
-                         return actualOptionsAsString;
+        return actualOptionsAsString;
     }
+
+    /**
+     * This method will accept a group of radio buttons as a List<WebElement>
+     *     it will loop through the List, and click to the radio buttons with provide attribute value
+     * @param radioButtons
+     * @param attributeValue
+     */
+
+    public static void clickRadioButton(List<WebElement> radioButtons, String attributeValue){
+
+        for (WebElement each : radioButtons){
+            if(each.getAttribute("value").equalsIgnoreCase(attributeValue)){
+                each.click();
+            }
+        }
+
+    }
+
+
 
 
 }
