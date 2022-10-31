@@ -7,16 +7,16 @@ import org.openqa.selenium.support.PageFactory;
 
 public class BasePage {
 
-    @FindBy(xpath = "//button[@class=\"button nav__item active\"]")
+    @FindBy(xpath = "//button[@class="button navitem active"]")
     public WebElement viewAllOrdersButtonNav;
 
     @FindBy(css = "a[href='/products'] button")
     public WebElement viewAllProductsButtonNav;
 
-    @FindBy(xpath = "/html/body/div[1]/nav/div[2]/a[3]/button")
+    @FindBy(xpath = "//*[text() = 'Order']")
     public WebElement orderButtonNavItem;
 
-    @FindBy(xpath = "//button[@class=\"button __logout\"]")
+    @FindBy(xpath = "//button[@class="button logout"]")
     public WebElement logoutButton;
 
     public BasePage(WebDriver driver) {
