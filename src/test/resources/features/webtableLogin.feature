@@ -10,7 +10,7 @@ Feature: User should be able to login with valid credentials
     And user clicks to login button
     Then user should see url contains orders
 
-  @webtableApp
+
   Scenario: Login scenario with 2 param
     When user enters username "Test" password "Tester" and logins
     Then user should see url contains orders
