@@ -6,28 +6,29 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.lang.annotation.Inherited;
 import java.util.concurrent.TimeUnit;
 
 public class Driver {
 
-    // Creating a private constructor, so we are closing access to the object of this class from outside of any classes
-    private Driver() {
-    }
 
+    // Creating a private constructor, so we are closing access to the object of this class from outside of any classes
+    private Driver() {}
 
     /*
     Making out 'driver' instance private, so that it is not reachable from outside any class
     We make it static, because we want it to run before anything else,
     also we will use it in static method
      */
-    private static WebDriver driver;
+
+    private static InheritableThreadLocal<WebDriver> driverPool = new InheritableThreadLocal<>();
 
     /*
     Create re-usable utility method which will return same driver instance when we call it.
      */
     public static WebDriver getDriver() {
 
-        if (driver == null) { // if driver/browser was never opened
+        if (driverPool.get() == null) { // if driver/browser was never opened
 
             String browserType = ConfigurationReader.getProperty("browser");
             ChromeOptions options = new ChromeOptions();
@@ -41,29 +42,29 @@ public class Driver {
             switch (browserType) {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
-                    driver = new ChromeDriver(options);
-                    driver.manage().window().maximize();
-                    driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+                    driverPool.set(new ChromeDriver(options));
+                    driverPool.get().manage().window().maximize();
+                    driverPool.get().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
                     break;
                 case "firefox":
                     WebDriverManager.firefoxdriver().setup();
-                    driver = new FirefoxDriver();
-                    driver.manage().window().maximize();
-                    driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+                    driverPool.set(new FirefoxDriver());
+                    driverPool.get().manage().window().maximize();
+                    driverPool.get().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
                     break;
             }
         }
         // Same driver instance will be returned every time we call Driver.getDriver() method
-        return driver;
+        return driverPool.get();
 
     }
 
     public static void setDriver(WebDriver driver) {}
 
     public static void closeDriver() {
-        if (driver != null) {
-            driver.quit(); // this line will kill the session, value will not be null
-            driver = null;
+        if (driverPool.get() != null) {
+            driverPool.get().quit(); // this line will kill the session, value will not be null
+            driverPool.remove();
         }
     }
 
