@@ -1,3 +1,0 @@
-file:src/test/resources/features/wiki_search.feature:6:13:28:29
-file:src/test/resources/features/webtableOrder.feature:4
-file:src/test/resources/features/googleSearch.feature:6:12
